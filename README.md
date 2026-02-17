@@ -1,4 +1,4 @@
-# 📦 Pavza Assets Management System
+# Assets Management System
 
 Full-stack asset management application built with **Spring Boot** (Backend) + **React TypeScript** (Frontend) + **MongoDB** (Database).
 
@@ -49,7 +49,7 @@ Maven bağımlılıkları otomatik indirilir. İlk çalıştırmada internet ba�
 
 ### Frontend Paketleri
 ```powershell
-cd C:\Users\90505\Downloads\assets\frontend
+cd frontend
 npm install
 ```
 
@@ -84,7 +84,7 @@ Tomcat started on port(s): 8080
 
 ### Adım 3: Frontend'i Başlat
 ```powershell
-cd C:\Users\90505\Downloads\assets\frontend
+cd frontend
 npm start
 ```
 
@@ -144,7 +144,7 @@ net stop MongoDB
 ```
 C:\Users\90505\Downloads\assets\
 │
-├── assets\                          ← Backend (Spring Boot)
+├── backend\                          ← Backend (Spring Boot)
 │   ├── src\main\java\com\java\assets\
 │   │   ├── aspect\
 │   │   │   └── LoggingAspect.java   ← AOP Loglama
@@ -240,7 +240,7 @@ net start MongoDB
 ### Frontend açılmıyor?
 ```powershell
 # node_modules eksik olabilir
-cd C:\Users\90505\Downloads\assets\frontend
+cd frontend
 npm install
 npm start
 ```
@@ -255,12 +255,3 @@ netstat -ano | findstr :8080
 - MongoDB Compass'tan `mongodb://localhost:27017` ile bağlandığınızı doğrulayın
 - `net start MongoDB` komutunu çalıştırın
 
----
-
-## 👤 Geliştirici
-
-**Pavza Assets Management**
-- Backend: Java Spring Boot + MongoDB
-- Frontend: React TypeScript + Material-UI
-- Versiyon: 1.0.0
-- Tarih: Şubat 2026
