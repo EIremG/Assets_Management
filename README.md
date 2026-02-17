@@ -142,7 +142,7 @@ net stop MongoDB
 ## 📁 Proje Yapısı
 
 ```
-C:\Users\90505\Downloads\assets\
+C:\...\...\...\assets\
 │
 ├── backend\                          ← Backend (Spring Boot)
 │   ├── src\main\java\com\java\assets\
