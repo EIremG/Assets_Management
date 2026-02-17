@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AssetsApplication",
+            "request": "launch",
+            "mainClass": "com.java.assets.AssetsApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-AssetsApplication<assets>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

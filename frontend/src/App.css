@@ -8,11 +8,23 @@ body {
 .App {
   min-height: 100vh;
   padding: 20px 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background:
+  radial-gradient(at 40% 20%, #ff6ec4 0px, transparent 50%),
+  radial-gradient(at 80% 0%, #7873f5 0px, transparent 50%),
+  radial-gradient(at 0% 50%, #4ade80 0px, transparent 50%),
+  radial-gradient(at 80% 50%, #22d3ee 0px, transparent 50%),
+  #111827;
+  
+ 
 }
 
 .App.dark {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background:
+radial-gradient(at 40% 20%, #5b21b6 0px, transparent 50%), /* değişti */
+radial-gradient(at 80% 0%, #312e81 0px, transparent 50%),
+radial-gradient(at 0% 50%, #064e3b 0px, transparent 50%),
+radial-gradient(at 80% 50%, #0c4a6e 0px, transparent 50%),
+#0b0f19;
 }
 
 * {

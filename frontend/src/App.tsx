@@ -350,10 +350,17 @@ function App() {
                 onClick={() => setSelectedCategory(null)}
                 sx={{
                   fontWeight: 600,
-                  background: !selectedCategory 
-                    ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' 
-                    : 'rgba(255,255,255,0.9)',
-                  color: !selectedCategory ? 'white' : '#667eea',
+                  background: !selectedCategory
+  ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+  : darkMode
+    ? 'rgba(255,255,255,0.08)'
+    : 'rgba(255,255,255,0.9)',
+
+color: !selectedCategory
+  ? 'white'
+  : darkMode
+    ? 'white'
+    : '#667eea',
                   cursor: 'pointer'
                 }}
               />
@@ -366,9 +373,17 @@ function App() {
                   )}
                   sx={{
                     fontWeight: 600,
-                    background: selectedCategory === cat.value 
-                      ? cat.color : 'rgba(255,255,255,0.9)',
-                    color: selectedCategory === cat.value ? 'white' : cat.color,
+                    background: selectedCategory === cat.value
+  ? cat.color
+  : darkMode
+    ? 'rgba(255,255,255,0.08)'
+    : 'rgba(255,255,255,0.9)',
+
+color: selectedCategory === cat.value
+  ? 'white'
+  : darkMode
+    ? 'white'
+    : cat.color,
                     border: `1px solid ${cat.color}60`,
                     cursor: 'pointer'
                   }}
