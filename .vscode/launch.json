@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AssetsApplication<assets>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.java.assets.AssetsApplication",
+            "projectName": "assets",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
