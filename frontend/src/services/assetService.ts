@@ -1,25 +1,29 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 import { Asset } from '../types/Asset';
 
-const API_URL = 'http://localhost:8080/api/assets';
-
 export const assetService = {
+
   getAllAssets: async (): Promise<Asset[]> => {
-    const response = await axios.get(API_URL);
+    const response = await axiosInstance.get('');
+    return response.data;
+  },
+
+  getAssetById: async (id: string): Promise<Asset> => {
+    const response = await axiosInstance.get(`/${id}`);
     return response.data;
   },
 
   addAsset: async (asset: Asset): Promise<Asset> => {
-    const response = await axios.post(API_URL, asset);
+    const response = await axiosInstance.post('', asset);
     return response.data;
   },
 
   updateAsset: async (id: string, asset: Asset): Promise<Asset> => {
-    const response = await axios.put(`${API_URL}/${id}`, asset);
+    const response = await axiosInstance.put(`/${id}`, asset);
     return response.data;
   },
 
   deleteAsset: async (id: string): Promise<void> => {
-    await axios.delete(`${API_URL}/${id}`);
+    await axiosInstance.delete(`/${id}`);
   },
 };

@@ -1,56 +1,36 @@
 package com.java.assets.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "assets")
 public class Asset {
-    
+
     @Id
     private String id;
-    
+
+    @NotBlank(message = "Name cannot be empty")
+    @Size(min = 2, max = 100, message = "Name must be between 2-100 characters")
     private String name;
-    
+
+    @NotBlank(message = "Serial number cannot be empty")
     @Indexed(unique = true)
     private String serialNo;
-    
+
+    @NotNull(message = "Assign date cannot be null")
     private LocalDate assignDate;
-    
-    private String category; // ← YENİ ALAN!
 
-    // Constructors
-    public Asset() {}
-
-    public Asset(String id, String name, String serialNo, LocalDate assignDate, String category) {
-        this.id = id;
-        this.name = name;
-        this.serialNo = serialNo;
-        this.assignDate = assignDate;
-        this.category = category;
-    }
-
-    // Getters and Setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getSerialNo() { return serialNo; }
-    public void setSerialNo(String serialNo) { this.serialNo = serialNo; }
-
-    public LocalDate getAssignDate() { return assignDate; }
-    public void setAssignDate(LocalDate assignDate) { this.assignDate = assignDate; }
-
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
-
-    @Override
-    public String toString() {
-        return "Asset{id='" + id + "', name='" + name + "', serialNo='" + serialNo + 
-               "', assignDate=" + assignDate + "', category='" + category + "'}";
-    }
+    private String category;
 }
