@@ -20,6 +20,7 @@ interface AssetFormProps {
   onSubmit: (e: React.FormEvent) => void;
   onCancel: () => void;
   darkMode: boolean;
+  formErrors: Partial<Record<keyof Asset, string>>;
 }
 
 const AssetForm: React.FC<AssetFormProps> = ({
@@ -29,6 +30,7 @@ const AssetForm: React.FC<AssetFormProps> = ({
   onSubmit,
   onCancel,
   darkMode,
+  formErrors,
 }) => {
   return (
     <Paper
@@ -55,6 +57,8 @@ const AssetForm: React.FC<AssetFormProps> = ({
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               required
+              error={!!formErrors.name}
+              helperText={formErrors.name}
               inputProps={{ minLength: 2, maxLength: 100 }}
             />
             <TextField
@@ -64,6 +68,8 @@ const AssetForm: React.FC<AssetFormProps> = ({
               value={formData.serialNo}
               onChange={(e) => setFormData({ ...formData, serialNo: e.target.value })}
               required
+              error={!!formErrors.serialNo}
+              helperText={formErrors.serialNo}
             />
             <TextField
               sx={{ flex: '1 1 200px' }}
@@ -73,6 +79,8 @@ const AssetForm: React.FC<AssetFormProps> = ({
               onChange={(e) => setFormData({ ...formData, assignDate: e.target.value })}
               InputLabelProps={{ shrink: true }}
               required
+              error={!!formErrors.assignDate}
+              helperText={formErrors.assignDate}
             />
             <FormControl sx={{ flex: '1 1 200px' }}>
               <InputLabel>Category</InputLabel>

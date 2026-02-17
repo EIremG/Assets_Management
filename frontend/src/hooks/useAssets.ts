@@ -15,6 +15,7 @@ export const useAssets = () => {
   const [formData, setFormData] = useState<Asset>(INITIAL_FORM);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [formErrors, setFormErrors] = useState<Partial<Record<keyof Asset, string>>>({});
 
   const fetchAssets = useCallback(async () => {
     setLoading(true);
@@ -32,8 +33,31 @@ export const useAssets = () => {
     fetchAssets();
   }, [fetchAssets]);
 
+  const validateForm = useCallback((): boolean => {
+    const newErrors: Partial<Record<keyof Asset, string>> = {};
+
+    if (!formData.name || formData.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters';
+    }
+    if (formData.name && formData.name.trim().length > 100) {
+      newErrors.name = 'Name must be less than 100 characters';
+    }
+    if (!formData.serialNo || formData.serialNo.trim().length === 0) {
+      newErrors.serialNo = 'Serial number is required';
+    }
+    if (!formData.assignDate) {
+      newErrors.assignDate = 'Assign date is required';
+    }
+
+    setFormErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }, [formData]);
+
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm()) return;
+
     try {
       if (editingId) {
         await assetService.updateAsset(editingId, formData);
@@ -43,15 +67,16 @@ export const useAssets = () => {
         toast.success('Asset added successfully! 🎉');
       }
       setFormData(INITIAL_FORM);
+      setFormErrors({});
       setEditingId(null);
       await fetchAssets();
     } catch (error: any) {
-      const errorMsg = error.response?.data?.error 
-        || error.response?.data?.message 
+      const errorMsg = error.response?.data?.error
+        || error.response?.data?.message
         || 'An error occurred';
       toast.error(errorMsg + ' ❌');
     }
-  }, [editingId, formData, fetchAssets]);
+  }, [editingId, formData, fetchAssets, validateForm]);
 
   const handleEdit = useCallback((asset: Asset) => {
     setFormData({
@@ -60,6 +85,7 @@ export const useAssets = () => {
       assignDate: asset.assignDate,
       category: asset.category,
     });
+    setFormErrors({});
     setEditingId(asset.id || null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
@@ -77,6 +103,7 @@ export const useAssets = () => {
 
   const handleCancelEdit = useCallback(() => {
     setFormData(INITIAL_FORM);
+    setFormErrors({});
     setEditingId(null);
   }, []);
 
@@ -86,6 +113,7 @@ export const useAssets = () => {
     setFormData,
     editingId,
     loading,
+    formErrors,
     handleSubmit,
     handleEdit,
     handleDelete,

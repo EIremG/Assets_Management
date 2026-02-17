@@ -2,9 +2,23 @@ import React, { useState } from 'react';
 import './App.css';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
-import { Container, Box, Typography, Button } from '@mui/material';
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  TextField,
+  Paper,
+  InputAdornment,
+  Chip,
+  Pagination,
+  CircularProgress,
+} from '@mui/material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import SearchIcon from '@mui/icons-material/Search';
+import DownloadIcon from '@mui/icons-material/Download';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 import { useAssets } from './hooks/useAssets';
 import { useFilter } from './hooks/useFilter';
@@ -18,18 +32,6 @@ import Dashboard from './components/Dashboard';
 import { Asset, CATEGORIES } from './types/Asset';
 import { exportToExcel, exportToPDF } from './utils/exportUtils';
 
-import {
-  TextField,
-  Paper,
-  Box as MuiBox,
-  InputAdornment,
-  Chip,
-  Pagination,
-} from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import DownloadIcon from '@mui/icons-material/Download';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-
 function App() {
   const { darkMode, theme, toggleDarkMode } = useDarkMode();
   const {
@@ -38,6 +40,7 @@ function App() {
     setFormData,
     editingId,
     loading,
+    formErrors,
     handleSubmit,
     handleEdit,
     handleDelete,
@@ -114,6 +117,7 @@ function App() {
             onSubmit={handleSubmit}
             onCancel={handleCancelEdit}
             darkMode={darkMode}
+            formErrors={formErrors}
           />
 
           {/* Search */}
@@ -153,7 +157,7 @@ function App() {
           <Box sx={{ mb: 3, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
             <Chip
               label="🌐 All"
-              onClick={() => clearFilters()}
+              onClick={clearFilters}
               sx={{
                 fontWeight: 600,
                 background: !selectedCategory
@@ -228,25 +232,34 @@ function App() {
             </Box>
           </Box>
 
+          {/* Loading Spinner */}
+          {loading && (
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+              <CircularProgress sx={{ color: 'white' }} size={60} />
+            </Box>
+          )}
+
           {/* Assets Grid */}
-          <Box sx={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-            gap: 3,
-          }}>
-            {paginatedAssets.map((asset) => (
-              <AssetCard
-                key={asset.id}
-                asset={asset}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                onViewDetails={handleViewDetails}
-              />
-            ))}
-          </Box>
+          {!loading && (
+            <Box sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+              gap: 3,
+            }}>
+              {paginatedAssets.map((asset) => (
+                <AssetCard
+                  key={asset.id}
+                  asset={asset}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                  onViewDetails={handleViewDetails}
+                />
+              ))}
+            </Box>
+          )}
 
           {/* Pagination */}
-          {totalPages > 1 && (
+          {!loading && totalPages > 1 && (
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
               <Paper elevation={4} sx={{
                 px: 3, py: 2,
@@ -279,7 +292,7 @@ function App() {
           )}
 
           {/* Empty States */}
-          {filteredAssets.length === 0 && assets.length > 0 && (
+          {!loading && filteredAssets.length === 0 && assets.length > 0 && (
             <Paper sx={{ p: 6, textAlign: 'center', background: 'rgba(255,255,255,0.9)', borderRadius: 3 }}>
               <Typography variant="h6" color="text.secondary" gutterBottom>
                 🔍 No assets found
@@ -290,7 +303,7 @@ function App() {
             </Paper>
           )}
 
-          {assets.length === 0 && !loading && (
+          {!loading && assets.length === 0 && (
             <Paper sx={{ p: 6, textAlign: 'center', background: 'rgba(255,255,255,0.9)', borderRadius: 3 }}>
               <Typography variant="h6" color="text.secondary">
                 📭 No assets yet. Add your first asset above!

@@ -1,9 +1,9 @@
 import React from 'react';
-import { 
-  Card, 
-  CardContent, 
-  CardActions, 
-  Typography, 
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
   Button,
   Box,
   Chip,
@@ -13,7 +13,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import TagIcon from '@mui/icons-material/Tag';
-import { useTheme } from '@mui/material/styles';
 import { Asset, getCategoryColor, getCategoryLabel } from '../types/Asset';
 
 interface AssetCardProps {
@@ -24,76 +23,69 @@ interface AssetCardProps {
 }
 
 const AssetCard: React.FC<AssetCardProps> = ({ asset, onEdit, onDelete, onViewDetails }) => {
-  const theme = useTheme();
-  const isDark = theme.palette.mode === 'dark';
   const categoryColor = getCategoryColor(asset.category);
-  
+
   return (
     <Card
-  sx={{
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: 'background.paper',
-    color: 'text.primary',
-    backdropFilter: 'blur(10px)',
-    borderRadius: 3,
-    transition: 'all 0.3s ease',
-    borderTop: `4px solid ${categoryColor}`,
-    '&:hover': {
-      transform: 'translateY(-8px)',
-      boxShadow: (theme) => theme.shadows[8],
-    },
-  }}
-  elevation={4}
->
-      {/* Karta tıklayınca modal açılır */}
+      sx={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        borderRadius: 3,
+        transition: 'all 0.3s ease',
+        borderTop: `4px solid ${categoryColor}`,
+        '&:hover': {
+          transform: 'translateY(-8px)',
+          boxShadow: '0 12px 24px rgba(0,0,0,0.2)'
+        }
+      }}
+      elevation={4}
+    >
       <CardActionArea onClick={() => onViewDetails(asset)} sx={{ flexGrow: 1 }}>
         <CardContent sx={{ p: 3 }}>
-          {/* Kategori Chip */}
           <Box sx={{ mb: 2 }}>
-            <Chip 
+            <Chip
               label={getCategoryLabel(asset.category)}
               size="small"
-              sx={{ 
+              sx={{
                 backgroundColor: `${categoryColor}20`,
                 color: categoryColor,
                 fontWeight: 600,
                 border: `1px solid ${categoryColor}40`
-              }} 
+              }}
             />
           </Box>
 
           <Typography
-           variant="h5"
-           gutterBottom
-           sx={{ fontWeight: 700, color: 'text.primary', mb: 2 }}
-    >
+            variant="h5"
+            component="div"
+            gutterBottom
+            sx={{ fontWeight: 700, color: '#2c3e50', mb: 2 }}
+          >
             {asset.name}
           </Typography>
-          
+
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <TagIcon sx={{ color: 'primary.main', fontSize: 20 }} />
+              <TagIcon sx={{ color: '#667eea', fontSize: 20 }} />
               <Typography variant="body2" color="text.secondary">
                 Serial No:
               </Typography>
-              <Chip 
-                label={asset.serialNo} 
-                size="small" 
-                sx={{ 
+              <Chip
+                label={asset.serialNo}
+                size="small"
+                sx={{
                   fontWeight: 600,
-                 background: (theme) =>
-                 theme.palette.mode === 'dark'
-                 ? 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)'
-                 : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   color: 'white'
-                }} 
+                }}
               />
             </Box>
-            
+
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <CalendarTodayIcon sx={{ color: 'primary.main', fontSize: 20 }} />
+              <CalendarTodayIcon sx={{ color: '#667eea', fontSize: 20 }} />
               <Typography variant="body2" color="text.secondary">
                 Assigned:
               </Typography>
@@ -104,10 +96,10 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onEdit, onDelete, onViewDe
           </Box>
         </CardContent>
       </CardActionArea>
-      
+
       <CardActions sx={{ justifyContent: 'space-between', px: 2, pb: 2 }}>
-        <Button 
-          size="small" 
+        <Button
+          size="small"
           variant="outlined"
           startIcon={<EditIcon />}
           onClick={(e) => {
@@ -115,19 +107,19 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onEdit, onDelete, onViewDe
             onEdit(asset);
           }}
           sx={{
-            borderColor: 'primary.main',
-            color: 'primary.main',
+            borderColor: '#667eea',
+            color: '#667eea',
             fontWeight: 600,
             '&:hover': {
-            borderColor: 'primary.main',
-            backgroundColor: 'action.hover'
-           }
-         }}
+              borderColor: '#667eea',
+              background: 'rgba(102, 126, 234, 0.1)'
+            }
+          }}
         >
           Edit
         </Button>
-        <Button 
-          size="small" 
+        <Button
+          size="small"
           variant="outlined"
           color="error"
           startIcon={<DeleteIcon />}
@@ -144,4 +136,4 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onEdit, onDelete, onViewDe
   );
 };
 
-export default AssetCard;
+export default React.memo(AssetCard);
